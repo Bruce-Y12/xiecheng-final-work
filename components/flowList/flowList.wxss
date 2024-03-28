@@ -1,0 +1,2 @@
+/* pages/flowList/flowList.wxss */
+@import "../../components/flowCard/flowCard.wxss";

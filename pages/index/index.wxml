@@ -1,0 +1,14 @@
+<!--index.wxml-->
+<!-- 瀑布流大概的思路就是，直接定义两列等宽的view，然后两列都加载相同的数据
+  wx:if="{{index%2==1}}" 这里，用if来辨别是奇数还是偶数，两边加载相反的 -->
+<import src="../../components/flowList/flowList.wxml" />
+<view>
+  <view class="search-container">
+    <view class="search-left">
+      <image src="../../image/search.png" />
+      <input type="text" placeholder="搜索" />
+    </view>
+  </view>
+
+  <flowList normalData="{{normalData}}"></flowList>
+</view>

@@ -1,0 +1,17 @@
+<!--pages/details/details.wxml-->
+<swiper indicator-dots="true" circular="true" indicator-color="white" indicator-active-color="orange">
+  <swiper-item>
+    <view class="red"></view>
+  </swiper-item>
+  <swiper-item>
+    <view class="green"></view>
+  </swiper-item>
+  <swiper-item>
+    <view class="blue"></view>
+  </swiper-item>
+
+  <!-- <swiper-item wx:for="{{imgList}}">
+     <image src="{{item.img}}"></image>
+  </swiper-item> -->
+
+</swiper>
