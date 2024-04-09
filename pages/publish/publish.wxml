@@ -1,2 +1,6 @@
 <!--pages/publish/publish.wxml-->
-<text>pages/publish/publish.wxml</text>
+<hg-editor
+placeholder= "请输入文章内容"
+uploadimageurl="https://www.imgtp.com/api/upload" 
+name= "小红书"
+></hg-editor>

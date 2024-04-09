@@ -1,6 +1,17 @@
 <!--pages/details/details.wxml-->
-<swiper indicator-dots="true" circular="true" indicator-color="white" indicator-active-color="orange">
-  <swiper-item>
+
+<view class="swiper-container">
+  <view class="user-head">
+    <image src="{{avator}}"></image>
+    <div class="user-info">
+      <p>{{nickName}}</p>
+
+    </div>
+
+  </view>
+
+  <swiper indicator-dots="true" circular="true" indicator-color="white" indicator-active-color="orange">
+    <!-- <swiper-item>
     <view class="red"></view>
   </swiper-item>
   <swiper-item>
@@ -8,10 +19,20 @@
   </swiper-item>
   <swiper-item>
     <view class="blue"></view>
-  </swiper-item>
-
-  <!-- <swiper-item wx:for="{{imgList}}">
-     <image src="{{item.img}}"></image>
   </swiper-item> -->
 
-</swiper>
+    <swiper-item wx:for="{{imgList}}">
+      <image mode="widthFix" class="swiper-image" src="{{item}}"></image>
+    </swiper-item>
+
+  </swiper>
+
+
+  <view class="notes">
+    <p class="user-title">{{title}}</p>
+    <text class="user-description">{{description}}</text>
+  </view>
+  <view>
+    <text class="time_location">{{publish_time}} | {{location}}</text>
+  </view>
+</view>

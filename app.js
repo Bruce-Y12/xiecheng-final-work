@@ -13,8 +13,11 @@ App({
       }
     })
   },
+
+
   globalData: {
-    userInfo: null
+    userInfo: null,
+    BASE_URL: 'http://127.0.0.1:7001'
   },
   data: {
     token: '',
@@ -25,6 +28,7 @@ App({
     phone: '',
     email: '',
     describe: '',
-    clientHeight: ''
+    clientHeight: '',
+    user_id: '',
   }
 })

@@ -14,8 +14,6 @@
   background-color: #eee;
   flex: 2;
   border-radius: 25rpx;
-
-
 }
 .search-left image{
   width: 48rpx;

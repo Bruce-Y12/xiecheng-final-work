@@ -5,10 +5,12 @@
 <view>
   <view class="search-container">
     <view class="search-left">
-      <image src="../../image/search.png" />
-      <input type="text" placeholder="搜索" />
+      <input type="text" placeholder=" 搜索" value="{{keyword}}" bindinput="onInput" />
+      <image src="../../image/search.png" bindtap="search" />
+
     </view>
   </view>
 
-  <flowList normalData="{{normalData}}"></flowList>
+  <flowList id="flowList"  normalData="{{searchResults}}" bind:pullDownRefresh="myPullDownRefresh"></flowList>
+
 </view>

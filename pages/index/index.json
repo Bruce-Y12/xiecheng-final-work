@@ -2,5 +2,7 @@
   "component": true,
   "usingComponents": {
     "flowList": "../../components/flowList/flowList"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 10
 }

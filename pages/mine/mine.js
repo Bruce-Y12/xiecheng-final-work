@@ -1,4 +1,4 @@
-// pages/publish/publish.js
+// pages/mine/mine.js
 Page({
 
   /**
@@ -12,7 +12,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.hideTabBar();
+
   },
 
   /**
@@ -61,19 +61,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-    wx.showShareMenu({
-      withShareTicket:true,
-      menu:['shareAppMessage','shareTimeline']
-    })
-  },
-  //用户点击右上角分享朋友圈
-  onShareTimeline:function(){
-    return {
-      title:'',
-      query:{
-        key:value
-      },
-      imageUrl:''
-    }
-  },
+
+  }
 })

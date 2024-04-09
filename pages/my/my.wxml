@@ -1,0 +1,58 @@
+<!--pages/my/my.wxml-->
+<import src="../../components/flowList/flowList.wxml" />
+
+<view class="page">
+  <view class="userInfo">
+    <view class="userinfo">
+      <view class="head-img">
+        <!-- <open-data class="thumb" type="userAvatarUrl"></open-data> -->
+        <image class="thumb" src="{{userAvatar}}"></image>
+        <!-- <open-data class="name" lang="zh_CN" type="userNickName"></open-data> -->
+        <view class="name" style="font-size: 36rpx;">{{username}}</view>
+      </view>
+      <view class="userMessage">
+        <view class="messageBox">
+          <view class="focus">
+            <span class="focusNum">0</span>
+            <span>关注</span>
+          </view>
+          <view class="border">|</view>
+          <view class="fans">
+            <span class="fansNum">1</span>
+            <span>粉丝</span>
+          </view>
+          <view class="border">|</view>
+          <view class="praise-collect">
+            <span class="colllectNum">0</span>
+            <span>赞与收藏</span>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="grade">
+      <image class="grade-icon" src="/image/grade-img.png"></image>
+      <span>等级：薯北鼻</span>
+    </view>
+    <view class="userDesc">
+      <span>这个人很懒，什么也没有</span>
+    </view>
+    <!-- 导航栏 -->
+    <view class="navBar">
+      <scroll-view class="navBar-box" scroll-x="true" style="white-space: nowrap; display:flex; ">
+        <view class="cate-list-container">
+          <view class="cate-list {{curIndex==index?'on':''}}" wx:for="{{category}}" wx:key="{{item.id}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCategory">{{item.name}}</view>
+        </view>
+      </scroll-view>
+    </view>
+
+  </view>
+  <view wx:if="{{toView === 0}}">
+    <flowList normalData="{{testData0}}"></flowList>
+  </view>
+  <view wx:if="{{toView === 1}}">
+    <flowList normalData="{{testData1}}"></flowList>
+  </view>
+  <view wx:if="{{toView === 2}}">
+    <flowList normalData="{{testData2}}"></flowList>
+  </view>
+</view>
