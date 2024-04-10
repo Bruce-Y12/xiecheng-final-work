@@ -8,53 +8,44 @@ import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import { checkLogin } from '@/services/User';
 import React from 'react';
-const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
-const RegisterPath = '/register';
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 export async function getInitialState(){
-  // const fetchUserInfo = async () => {
-  //   try {
-  //     const res = await checkLogin();
-  //     if(res.code == "200"){
-  //       return res.data;
-  //     }
-  //     else{
-  //       history.push(loginPath);
-  //     }
-  //   } catch (error) {
-  //     history.push(loginPath);
-  //   }
-  //   return undefined;
-  // };
-  // // 如果不是登录页面，执行
-  // const { location } = history;
-  // if (location.pathname !== loginPath && location.pathname !== RegisterPath) {
-  //   console.log("------正在进行鉴权------")
-  //   const currentUser = await fetchUserInfo();
-  //   console.log("currentUser",currentUser);
-  //   return {
-  //     fetchUserInfo,
-  //     currentUser,
-  //     settings: defaultSettings as Partial<LayoutSettings>,
-  //   };
-  // }
-  if (location.pathname !== loginPath && location.pathname !== RegisterPath) {
+  const fetchUserInfo = async () => {
+    try {
+      const res = await checkLogin();
+      console.log("res",res);
+      if(res){
+        return res;
+      }
+      else{
+        history.push(loginPath);
+      }
+    } catch (error) {
+      history.push(loginPath);
+    }
+    return undefined;
+  };
+  // 如果不是登录页面，执行
+  const { location } = history;
+  console.log(location.pathname);
+  if (location.pathname !== loginPath ) {
     console.log("------正在进行鉴权------")
-    const currentUser = {username:"root", };
+    const currentUser = await fetchUserInfo();
     console.log("currentUser",currentUser);
     return {
+      fetchUserInfo,
       currentUser,
       settings: defaultSettings as Partial<LayoutSettings>,
     };
   }
-  // return {
-  //   fetchUserInfo,
-  //   settings: defaultSettings as Partial<LayoutSettings>,
-  // };
+  return {
+    fetchUserInfo,
+    settings: defaultSettings as Partial<LayoutSettings>,
+  };
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -74,9 +65,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      // if (!initialState?.currentUser && location.pathname !== loginPath) {
-      //   history.push(loginPath);
-      // }
+      if (!initialState?.currentUser && location.pathname !== loginPath) {
+        history.push(loginPath);
+      }
     },
     bgLayoutImgList: [
       {
@@ -107,19 +98,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       return (
         <>
           {children}
-          {isDev && (
-            <SettingDrawer
-              disableUrlParams
-              enableDarkTheme
-              settings={initialState?.settings}
-              onSettingChange={(settings) => {
-                setInitialState((preInitialState) => ({
-                  ...preInitialState,
-                  settings,
-                }));
-              }}
-            />
-          )}
         </>
       );
     },

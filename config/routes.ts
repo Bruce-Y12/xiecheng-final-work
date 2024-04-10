@@ -23,36 +23,19 @@ export default [
       },
       {
         path: '/',
-        redirect: '/home/taskList', // 默认重定向到首页
+        redirect: '/taskList', // 默认重定向到首页
       },
     ],
   },
   {
-    path: '/register',
-    name: 'register',
-    component: './User/Register',
-    layout: false,
-  },  
-  {
-    path: '/home',
-    icon: 'home',
-    name:"home",
-    // redirect: '/home/taskList', // 添加重定向配置
-    routes: [
-      {
-        path: '/home/taskList', // 子路由路径为 /home/taskList
-        name: 'task',
-        component: './TaskList',
-      },
-      {
-        path: '/home', // 空路径，可根据需求渲染其他组件或重定向
-        component: './TaskList', // 或重定向到其他页面
-      },
-    ],
+    path: '/taskList', 
+    name: 'task',
+    icon: 'readOutlined',
+    component: './TaskList',
   },
   {
     path: '/management',
-    icon: 'group',
+    icon: 'contactsOutlined',
     name:"management",
     component: './Management',
     access: true,

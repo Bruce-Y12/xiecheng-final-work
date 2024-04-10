@@ -110,7 +110,9 @@ const Login: React.FC = () => {
   const intl = useIntl();
 
   const fetchUserInfo = async () => {
+    console.log('111111111111111111');
     const userInfo = await initialState?.fetchUserInfo?.();
+    console.log(userInfo);
     if (userInfo) {
       flushSync(() => {
         setInitialState((s) => ({
@@ -135,7 +137,7 @@ const Login: React.FC = () => {
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
-        history.push('/home/taskList');
+        history.push('taskList');
         return;
       }
       else{

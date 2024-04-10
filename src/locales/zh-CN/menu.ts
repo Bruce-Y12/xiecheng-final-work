@@ -49,6 +49,6 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
-  "menu.home.task": "审核列表",
-  "menu.management": "系统管理"
+  "menu.task": "审核列表",
+  "menu.management": "员工管理"
 };

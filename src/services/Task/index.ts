@@ -17,24 +17,22 @@ export async function deleteArticles(
     });
 }
 
-export async function updateTaskById(
-    params: {
-        taskId: number, taskName?: String, description?: String, state?: String, deadline?: Date
-    },
-    ) {
-    return request<API.FakeCaptcha>('/task/updateTaskById', {
-        method: 'post',
-        data: params,
+
+export async function getCountByStatus() {
+    return request('/articles/status/count', {
+        method: 'get',
     });
 }
 
-export async function addTask(
-    params: {
-        taskName: String, description?: String, state?: String, deadline?: Date
-    },
-    ) {
-    return request<API.FakeCaptcha>('/task/addTask', {
-        method: 'post',
-        data: params,
+export async function updateStatus(params: {
+    id: number,
+    employee_id: number,
+    status: number,
+    rejected_reason?: string
+}) {
+    return request('/articles/status/' + params.id, {
+        method: 'PUT',
+        data: params
     });
 }
+
