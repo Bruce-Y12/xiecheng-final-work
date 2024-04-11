@@ -3,6 +3,7 @@ const app = getApp()
 let username = ''
 let password = ''
 let confirpassword = ''
+const registerApi = `${app.globalData.BASE_URL}/users/`
 Page({
   data: {
     username: '',
@@ -66,29 +67,29 @@ Page({
       })
     } else {
       var userinfo = {
-        username: username,
+        name: username,
         password: password
       }
       wx.request({
-        url: 'http://127.0.0.1:3007/api/reguser',
+        url: registerApi,
         method: 'POST',
         header: {
-          'content-type': 'application/x-www-form-urlencoded'
+          'content-type': 'application/json'
         },
         data: userinfo,
         success: function (res) {
-          console.log(res)
+          console.log("@res", res)
           // 注册失败，返回失败原因
-          if (res.data.status === 1) {
+          if (res.statusCode !== 201) {
             wx.showToast({
-              title: res.data.message,
+              title: res.data.errMsg,
               icon: 'none'
             })
           }
           // 注册成功
           else {
             wx.showToast({
-              title: res.data.message,
+              title: "注册成功！",
               icon: 'none',
               duration: 1000,
               // 显示透明蒙层，防止触摸穿透

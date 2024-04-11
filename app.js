@@ -17,7 +17,8 @@ App({
 
   globalData: {
     userInfo: null,
-    BASE_URL: 'http://127.0.0.1:7001'
+    BASE_URL: 'http://127.0.0.1:7001',
+
   },
   data: {
     token: '',
@@ -30,5 +31,7 @@ App({
     describe: '',
     clientHeight: '',
     user_id: '',
+    avatar: '',
+    toView: -1,
   }
 })

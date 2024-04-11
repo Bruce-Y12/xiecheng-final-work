@@ -1,13 +1,15 @@
-<!--pages/send/send.wxml-->
+<!--pages/article-edit/article-edit.wxml-->
 <view class="publish-container">
 
 <view class="title-input-wrap">
   <input type="text" placeholder="填写标题" value="{{titleValue}}" maxlength="20" bindinput="getTitleValue" />
 </view>
 
+
 <view class="input-wrap">
   <textarea placeholder="请输入正文内容" class="input-text" maxlength="2000" bindinput="getValue" value="{{inputValue}}"></textarea>
 </view>
+
 
 <view class="img-wrap" wx:if="{{!videoUrl}}">
 
@@ -29,9 +31,9 @@
 
 <view bindtap="chooseAddress" class="choose-localtion">{{localtion}}</view>
 
+
+
 <view wx:if="{{cloudImgList.length == 0}}" class="choose-localtion" bindtap="chooseVideo">上传图片</view>
 
-<button bindtap="submitData" class="publish-but">发布</button>
-
-<canvas id="myCanvas" class="canvas-case" type="2d" style="border: 1px solid; width: 300px; height: 150px;" />
+<button bindtap="submitData" class="publish-but">修改</button>
 </view>

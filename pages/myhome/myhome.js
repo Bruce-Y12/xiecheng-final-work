@@ -6,8 +6,33 @@ let nickname = ''
 
 Page({
   data: {
-    selectedImage: '',
-    username: "Bruce",
+    defaultImage: 'https://img2.imgtp.com/2024/04/05/tm6oJn00.png',
+    selectedImage: 'https://img2.imgtp.com/2024/04/05/tm6oJn00.png',
+    username: "",
+    user_id: -1,
+    avatar: "",
+  },
+  onLoad: function (option) {
+    console.log("@@---onLoad---app.data:", app.data);
+    this.setData({
+      user_id: app.data.user_id,
+    })
+    const getUserInfoApi = `${app.globalData.BASE_URL}/users/${this.data.user_id}`;
+    wx.request({
+      url: getUserInfoApi,
+      method: 'GET',
+
+      success: res=> {
+        console.log("@res.data:", res.data);
+        this.setData({
+          avatar: res.data.avatar,
+          username: res.data.name
+        })
+      },
+      fail: function(err){
+        console.log("err", err);
+      }
+    })
   },
   chooseImage() {
     var that = this;
@@ -67,5 +92,12 @@ Page({
     else {
       console.log("上传失败！");
     }
+  },
+  logout(){
+    // TODO:退出登录
+    wx.removeStorageSync('token');
+    wx.redirectTo({
+      url: '/pages/login/login',
+    })
   }
 })

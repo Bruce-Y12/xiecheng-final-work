@@ -1,4 +1,5 @@
 // index.js
+const token = wx.getStorageSync('token');
 Page({
   data: {
     keyword: "",
@@ -183,6 +184,9 @@ Page({
     wx.request({
       url: apiUrl,
       method: 'GET',
+      header: {
+        'Authorization': 'Bearer ' + token // 在请求头中添加 Authorization 字段，并携带 token
+      },
       success: res => {
         const articleList = res.data;
         console.log("@articleList:", articleList)

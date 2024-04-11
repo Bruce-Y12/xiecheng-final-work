@@ -1,3 +1,4 @@
+/* pages/article-edit/article-edit.wxss */
 /* pages/send/send.wxss */
 
 Page {
@@ -91,9 +92,4 @@ font-size: 36rpx;
 .publish-but {
   background-color: #FF2840;
   color: #fff;
-}
-.canvas-case{
-  position: absolute;
-  left: 0;
-  top: 1000px;
 }

@@ -8,7 +8,8 @@
     "pages/details/details",
     "pages/send/send",
     "pages/mine/mine",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/article-edit/article-edit"
   ],
   "window": {
     "navigationBarTextStyle": "black",

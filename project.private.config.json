@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/details/details",
+          "pathName": "pages/details/details",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/send/send",
           "pathName": "pages/send/send",
           "query": "",

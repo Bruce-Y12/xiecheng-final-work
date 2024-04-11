@@ -6,8 +6,10 @@
     <view class="userinfo">
       <view class="head-img">
         <!-- <open-data class="thumb" type="userAvatarUrl"></open-data> -->
-        <image class="thumb" src="{{userAvatar}}"></image>
-        <!-- <open-data class="name" lang="zh_CN" type="userNickName"></open-data> -->
+        <navigator url="/pages/myhome/myhome">
+          <image class="thumb" src="{{userAvatar}}"></image>
+          <!-- <open-data class="name" lang="zh_CN" type="userNickName"></open-data> -->
+        </navigator>
         <view class="name" style="font-size: 36rpx;">{{username}}</view>
       </view>
       <view class="userMessage">
@@ -47,12 +49,12 @@
 
   </view>
   <view wx:if="{{toView === 0}}">
-    <flowList normalData="{{testData0}}"></flowList>
+    <flowList normalData="{{toAuditArticleList}}"></flowList>
   </view>
   <view wx:if="{{toView === 1}}">
-    <flowList normalData="{{testData1}}"></flowList>
+    <flowList normalData="{{acceptArticleList}}"></flowList>
   </view>
   <view wx:if="{{toView === 2}}">
-    <flowList normalData="{{testData2}}"></flowList>
+    <flowList normalData="{{rejectArticleList}}"></flowList>
   </view>
 </view>

@@ -1,4 +1,7 @@
 // pages/my/my.js
+const token = wx.getStorageSync('token');
+const app = getApp();
+
 Page({
 
   /**
@@ -20,7 +23,7 @@ Page({
         tx: '../../image/B575819BBCE6F5CFE34975489DE3DC53.png',
         name: '作者名字1',
         love: 10,
-        num: 5
+        num: 5,
       },
       {
         // 第二条记录的数据
@@ -61,16 +64,16 @@ Page({
         num: 5
       },
       {
-        id:5,
+        id: 5,
         title: '文章标题2',
         Cover: 'https://img2.imgtp.com/2024/04/05/tm6oJn00.png',
         tx: '../../image/B575819BBCE6F5CFE34975489DE3DC53.png',
         name: '作者名字2',
         love: 8,
         num: 3
-      },  
+      },
       {
-        id:6,
+        id: 6,
         title: '文章标题1',
         Cover: 'https://img2.imgtp.com/2024/04/05/tm6oJn00.png',
         tx: '../../image/B575819BBCE6F5CFE34975489DE3DC53.png',
@@ -78,7 +81,7 @@ Page({
         love: 10,
         num: 5
       }
-    ],   
+    ],
     testData1: [
       {
         // 第一条记录的数据
@@ -129,7 +132,7 @@ Page({
         love: 10,
         num: 5
       },
-    ],  
+    ],
     testData2: [
       {
         // 第一条记录的数据
@@ -180,71 +183,98 @@ Page({
         love: 10,
         num: 5
       },
-    ],  
+    ],
     allArticleList: [],
+    toAuditArticleList: [],
+    acceptArticleList: [],
+    rejectArticleList: [],
     curIndex: 0,
-    toView:0,
+    toView: 0,
     userAvatar: "",
     username: "",
   },
   switchCategory(e) {
     this.setData({
-      curIndex: e.currentTarget.dataset.index? e.currentTarget.dataset.index :0,
+      curIndex: e.currentTarget.dataset.index ? e.currentTarget.dataset.index : 0,
       toView: e.currentTarget.dataset.index,
     })
+    app.data.toView = e.currentTarget.dataset.index;
     console.log("toView:", this.data.toView)
   },
-  getUserInfo(){
+  getUserInfo() {
     var that = this;
-    const user_id = 2;
-    const app = getApp();
+    const user_id = app.data.user_id;
     const getUserInfoApi = `${app.globalData.BASE_URL}/users/${user_id}`
     wx.request({
       url: getUserInfoApi,
       method: 'GET',
       success: function (res) {
-          that.setData({
-            userAvatar: res.data.avatar,
-            username: res.data.name
-          })
+        that.setData({
+          userAvatar: res.data.avatar,
+          username: res.data.name
+        })
       },
       fail: function (err) {
         console.error(err);
       }
-    });    
+    });
   },
-  getAllArticleList(){
+  getAllArticleList() {
+    var that = this;
     const app = getApp();
     const getAllArticleListApi = `${app.globalData.BASE_URL}/articles/`
+    console.log("##getAllArticleListApi:", getAllArticleListApi)
+
     wx.request({
       url: getAllArticleListApi,
       method: 'GET',
-      success: function (res) {
-          that.setData({
-            
-          })
+      header: {
+        'Authorization': 'Bearer ' + token
+      },
+      success: res => {
+        const articleList = res.data;
+        const processedArticleList = articleList.map(article => {
+
+          const images = article.images;
+          const Cover = images.length > 0 ? images[0] : '';
+          return {
+            id: article.dataValues.id,
+            title: article.dataValues.title,
+            status: article.dataValues.status,
+            Cover: Cover,
+            tx: 'https://img2.imgtp.com/2024/04/08/VDzGXt75.png',
+            name: this.data.username,
+            love: 10,
+            num: 5
+          };
+        });
+
+        this.setData({
+          allArticleList: processedArticleList,
+
+        });
+        console.log("%%allArticleList:", this.data.allArticleList)
+
+        this.setData({
+          toAuditArticleList: this.data.allArticleList.filter(item => item.status === 0),
+          acceptArticleList: this.data.allArticleList.filter(item => item.status === 1),
+          rejectArticleList: this.data.allArticleList.filter(item => item.status === 2),
+        })
+
+        console.log("@@this.data.rejectArticleList:", this.data.rejectArticleList)
       },
       fail: function (err) {
         console.error(err);
       }
-    });     
+    });
   },
-  // 待审核的文章
-  getToAuditData(){
 
-  },
-  // 已通过的文章
-  getAcceptData(){
-
-  },
-  getRejectData(){
-
-  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
     this.getUserInfo();
+    this.getAllArticleList();
   },
 
   /**
@@ -258,7 +288,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.getAllArticleList();
   },
 
   /**

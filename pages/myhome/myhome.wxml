@@ -3,7 +3,7 @@
   <!-- <view class="v1"> -->
   <view class="v2">
     <view class="user-container">
-      <image class="avatar-image" bindtap="chooseImage" wx:if="{{selectedImage}}" src="{{selectedImage}}"></image>
+      <image class="avatar-image" bindtap="chooseImage" wx:if="{{avatar}}" src="{{avatar}}"></image>
       <image class="avatar-image" bindtap="chooseImage"  wx:else src="../../image/头像上传-nor.png"></image>
       <view class="name-container">
         <view class="username">用户名：{{username}}</view>

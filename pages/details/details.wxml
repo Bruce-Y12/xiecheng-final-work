@@ -5,24 +5,19 @@
     <image src="{{avator}}"></image>
     <div class="user-info">
       <p>{{nickName}}</p>
-
     </div>
-
+    <!-- 三个点 -->
+    <cover-view class="three-dots" catchtap="showOptions">
+      <cover-image src="/image/three-dots.png" class="dots-image"></cover-image>
+    </cover-view>
   </view>
 
   <swiper indicator-dots="true" circular="true" indicator-color="white" indicator-active-color="orange">
-    <!-- <swiper-item>
-    <view class="red"></view>
-  </swiper-item>
-  <swiper-item>
-    <view class="green"></view>
-  </swiper-item>
-  <swiper-item>
-    <view class="blue"></view>
-  </swiper-item> -->
+
 
     <swiper-item wx:for="{{imgList}}">
       <image mode="widthFix" class="swiper-image" src="{{item}}"></image>
+
     </swiper-item>
 
   </swiper>
@@ -31,8 +26,37 @@
   <view class="notes">
     <p class="user-title">{{title}}</p>
     <text class="user-description">{{description}}</text>
+
   </view>
   <view>
     <text class="time_location">{{publish_time}} | {{location}}</text>
   </view>
+  <view class="underline" wx:show="{{rejectedCommentFlag == 2}}"></view>
 </view>
+
+<!-- 评论-回复-回复评论显示区域 -->  
+<view class="container" wx:if="{{rejectedCommentFlag == 2}}">
+    <!-- 总共评论数 -->    
+    <view class="total">共{{comment_list.length}}条评论</view>    
+    <!-- END -->
+
+    <!-- 用户评论回复显示区域 -->    
+    <view class="container-item" wx:for="{{comment_list}}" wx:for-item="list" wx:key="key">
+      <image class="item_img" src="{{list.comment_user_avatar}}"></image>
+      <view class="item_right">
+        <view class="right_name">{{list.comment_user_name}}</view>
+        <view class="right_content">
+          <text class="right_content_txt" bindtap='replyComment' data-type="1" data-name='{{list.comment_user_name}}' data-cid='{{list.comment_id}}' data-pid="{{list.parent_id}}">{{list.comment_text}}</text>
+          <text class="right_content_txt2">{{list.comment_time}}</text>
+
+        </view>
+      </view>
+    </view>    
+    <!-- END -->
+    <!-- 结束 -->    
+    <view class="end">      
+      <text class="end_txt" space="nbsp">—  THE END  —</text>    
+    </view>    
+    <!-- END -->
+  </view>  
+  <!-- END -->

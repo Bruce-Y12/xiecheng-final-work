@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const loginApi = `${app.globalData.BASE_URL}/login/user`
 let username = ''
 let password = ''
 Page({
@@ -49,11 +50,11 @@ Page({
     } else {
       // 获取用户前端输入的信息
       var userinfo = {
-        username: username,
+        name: username,
         password: password
       }
       wx.request({
-        url: 'http://127.0.0.1:3007/api/login',
+        url: loginApi,
         method: 'POST',
         // post里面必须要有响应头，get里面可有可无
         header: {
@@ -63,14 +64,16 @@ Page({
         success: function (res) {
           // res：服务器响应信息
           console.log(res)
-          if (res.data.status === 1) {
+          if (res.data.code !== 200) {
             wx.showToast({
               title: res.data.message,
               icon: 'none'
             })
           } else {
             // 登陆成功，把个人信息放入app
-            app.data.token=res.data.token,
+            app.data.token = res.data.token,
+            app.data.user_id = res.data.user_id,
+            wx.setStorageSync('token', res.data.token);
             wx.showToast({
               title: res.data.message,
               icon: 'none',
