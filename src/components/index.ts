@@ -8,5 +8,6 @@
 
 import { Question, SelectLang } from './RightContent';
 import { AvatarDropdown, AvatarName } from './RightContent/AvatarDropdown';
+import { MessageDrawer } from './MessageDrawer';
 
-export { Question, SelectLang, AvatarDropdown, AvatarName };
+export { Question, SelectLang, AvatarDropdown, AvatarName, MessageDrawer };

@@ -16,7 +16,7 @@ const TaskList: React.FC = () => {
   const [taskList, setTaskList] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('-1');
   const [form] = Form.useForm(); // 获取表单实例
-  const { initialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   const [rejectModalVisible, setRejectModalVisible] = useState(false);
   const [recordInfo, setRecordInfo] = useState<any | null>(null);
   const { currentUser } = initialState || {};
@@ -52,21 +52,25 @@ const TaskList: React.FC = () => {
       const processedArticleList = await Promise.all(articleList.map(processArticle));
       console.log("@processedArticleList", processedArticleList);
       setTaskList(processedArticleList);
-      const counts = await getCountByStatus();
-      const updatedTabData = tabData.map(tab => ({
-        ...tab,
-        count: counts[tab.key] || 0,
-      }));
-      setTabData(updatedTabData);
+      countStatus();
     } catch (error:any) {
       console.error(error?.message);
     }
   };
 
+  const countStatus = async() => {
+    const counts = await getCountByStatus();
+      const updatedTabData = tabData.map(tab => ({
+        ...tab,
+        count: counts[tab.key] || 0,
+      }));
+      // setInitialState({ ...initialState, unreviewedCount: counts['0'] });
+      setTabData(updatedTabData);
+  };
+
   const handleStatus = async(record, status)=>{
     record.status = status;
     record.employee_id = currentUser.id;
-    console.log("最终的数据",record);
     try{
       const res = await updateStatus(record);
       fetchData();
@@ -75,6 +79,11 @@ const TaskList: React.FC = () => {
       message.error('审核失败，请稍后重试！');
     }
   }
+
+  useEffect(() => {
+    // 在组件挂载时获取任务列表数据
+    fetchData();
+  }, [initialState?.unreviewedCount]); // 仅在组件挂载时执行一次
 
 
   useEffect(() => {
@@ -171,7 +180,6 @@ const TaskList: React.FC = () => {
             valueType: 'option',
             width: 150,
             render: (_, record) => {
-              console.log("record:", record);
               if (record.status == 0) {
                 const canDelete = currentUser.role === 1; // 检查当前用户角色是否为管理员
                 return [
@@ -289,7 +297,6 @@ const TaskList: React.FC = () => {
   const handleRejectConfirm = async() => {
       const values = await form.getFieldsValue();
       setRecordInfo(null);
-      console.log("@values",values.rejected_reason)
       handleStatus({...recordInfo,rejected_reason: values.rejected_reason}, 2);
       setRejectModalVisible(false);
   }
@@ -328,7 +335,7 @@ const TaskList: React.FC = () => {
               rowKey="id" // 假设任务数据中有唯一的id作为key
               search={false} // 不显示搜索框
               dateFormatter="string" // 日期格式化为字符串展示
-              pagination={{ pageSize: 10 }} // 分页设置
+              pagination={{ pageSize: 5 }} // 分页设置
               options={false} // 不显示表格设置
               scroll={{ x: true }} // 启用水平滚动条
             />
