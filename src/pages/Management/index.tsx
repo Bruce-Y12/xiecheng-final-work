@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { getUserInfo, updatePermission, addEmployee, deleteEmployee } from '@/services/Management';
-import {Button, Form, Input, Modal, Radio, message } from 'antd';
+import {Button, Form, Input, Modal, Popconfirm, Radio, message } from 'antd';
 import { useModel } from 'umi';
 import { Link } from 'react-router-dom';
 
@@ -66,18 +66,22 @@ const ManagementList: React.FC = () => {
 
   // 删除员工
   const handleDelete = async (record: any) => {
-    // 删除员工逻辑
-    console.log('删除员工', record);
-    try {
-      // 调用删除员工的接口函数
-      const res = await deleteEmployee(record.id); 
-      // 删除成功，更新人员列表
-      const updatedTaskList = dataSource.filter(data => data.id !== record.id);
-      setDataSource(updatedTaskList);
-      message.success('删除成功！');
-    } catch (error) {
-      console.error('删除员工出错:', error);
-      message.error('删除员工出错，请稍后重试！');
+    if(record.id !== currentUser.id){
+      // 删除员工逻辑
+      console.log('删除员工', record);
+      try {
+        // 调用删除员工的接口函数
+        const res = await deleteEmployee(record.id); 
+        // 删除成功，更新人员列表
+        const updatedTaskList = dataSource.filter(data => data.id !== record.id);
+        setDataSource(updatedTaskList);
+        message.success('删除成功！');
+      } catch (error) {
+        console.error('删除员工出错:', error);
+        message.error('删除员工出错，请稍后重试！');
+      }
+    }else{
+      message.error('不可删除当前用户！');
     }
   };
 
@@ -123,20 +127,17 @@ const ManagementList: React.FC = () => {
       valueType: 'option',
       width: 150,
       render: (text, record, _, action) => [
-        <a
+        <Button type="primary" size="small"
           key="editable"
           onClick={() => {
             action?.startEditable?.(record.id);
           }}
         >
           权限修改
-        </a>,
-        <a
-          key="deleteable"
-          onClick={() => handleDelete(record)}
-        >
-          删除
-        </a>,
+        </Button>,
+        <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record)}>
+        <Button type="primary" danger size="small">删除</Button>
+      </Popconfirm>
       ],
     },
   ];
@@ -209,7 +210,7 @@ const ManagementList: React.FC = () => {
         <div style={{ textAlign: 'center', marginTop: '100px', height: "100%" }}>
             <h1>抱歉，您没有权限访问该页面！</h1>
             <h3>点此回到
-                <Link to="/home/taskList">审核列表</Link>页面
+                <Link to="/taskList">审核列表</Link>页面
             </h3>
             </div>
             

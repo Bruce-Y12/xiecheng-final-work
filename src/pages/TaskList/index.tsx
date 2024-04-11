@@ -5,10 +5,11 @@ import { PageContainer } from '@ant-design/pro-layout';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
 import { getArticles, deleteArticles, getCountByStatus, updateStatus } from '@/services/Task'; // 导入任务相关的接口请求函数
 import { getEmployee } from '@/services/User'; // 导入任务相关的接口请求函数
-import {  Badge, Button, Form, Input, Modal, Tabs, message } from 'antd';
+import {  Badge, Button, Form, Input, Modal, Popconfirm, Tabs, message } from 'antd';
 import { ReactComponent as UncheckedIcon } from '../../../public/pending.svg';
 import { ReactComponent as ApprovedIcon } from '../../../public/approved.svg';
 import { ReactComponent as RejectedIcon } from '../../../public/rejected.svg';
+import { ReactComponent as DeletedIcon } from '../../../public/deleted.svg';
 import TabPane from 'antd/es/tabs/TabPane';
 import { useModel } from 'umi';
 
@@ -25,6 +26,7 @@ const TaskList: React.FC = () => {
     { label: '待审核列表', count: 0, key: '0' },
     { label: '通过列表', count: 0, key: '1' },
     { label: '未通过列表', count: 0, key: '2' },
+    { label: '删除列表', count: 0, key: '3' },
   ]);
 
   // 定义处理函数，获取员工名字
@@ -32,7 +34,7 @@ const TaskList: React.FC = () => {
     const processedArticle = article.dataValues;
     if (processedArticle.employee_id) {
         const employee = await getEmployee(processedArticle.employee_id);
-        processedArticle.employee_name = employee.name;
+        processedArticle.employee_name = employee.name || 'unknown';
     }
     return processedArticle;
   };
@@ -158,6 +160,9 @@ const TaskList: React.FC = () => {
             case 2:
               icon = <RejectedIcon style={{ width: '50px', height: '50px' }} />;
               break;
+            case 3:
+              icon = <DeletedIcon style={{ width: '50px', height: '50px' }} />;
+              break;
             default:
               icon = null;
           }
@@ -181,18 +186,21 @@ const TaskList: React.FC = () => {
             width: 150,
             render: (_, record) => {
               if (record.status == 0) {
-                const canDelete = currentUser.role === 1; // 检查当前用户角色是否为管理员
+                const canDelete = currentUser?.role === 1; // 检查当前用户角色是否为管理员
                 return [
-                  <a key="pass" onClick={() => handleStatus(record, 1)}>
-                    通过
-                  </a>,
-                  <a key="reject" onClick={() => handleConfirmStatus(record, 2)}>
+                  <Popconfirm title="确认通过?" onConfirm={() => handleStatus(record, 1)}>
+                      <Button type="primary" size="small">通过</Button>
+                    </Popconfirm>
+                  ,
+                  <Button key="reject"  size="small" onClick={() => handleConfirmStatus(record, 2)}>
                     拒绝
-                  </a>,
+                  </Button>,
                   canDelete ? (
-                    <a key="delete" onClick={() => handleDelete(record)}>删除</a>
+                    <Popconfirm title="确认删除?" onConfirm={() => handleStatus(record, 3)}>
+                      <Button type="primary" danger size="small">删除</Button>
+                    </Popconfirm>
                   ) : (
-                    <span style={{ color: 'gray' }}>删除</span>
+                    <Button ghost disabled>删除</Button>
                   ),
                 ];
               } else {
@@ -220,7 +228,7 @@ const TaskList: React.FC = () => {
                     拒绝
                   </a>,
                   canDelete ? (
-                    <a key="delete" onClick={() => handleDelete(record)}>删除</a>
+                    <a key="delete" onClick={() => handleStatus(record, 3)}>删除</a>
                   ) : (
                     <span style={{ color: 'gray' }}>删除</span>
                   ),
@@ -266,6 +274,21 @@ const TaskList: React.FC = () => {
             width: 200,
           },
         ];
+      case '3':
+        return [
+          ...commonColumns,
+          {
+            title: '审核人',
+            dataIndex: 'employee_name',
+            width: 100,
+          },
+          {
+            title: '审核时间',
+            dataIndex: 'audit_at',
+            valueType: 'dateTime',
+            width: 200,
+          },
+        ]
       default:
         return commonColumns; // 默认显示全部列
     }
