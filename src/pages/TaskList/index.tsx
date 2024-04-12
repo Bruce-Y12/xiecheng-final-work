@@ -66,7 +66,7 @@ const TaskList: React.FC = () => {
         ...tab,
         count: counts[tab.key] || 0,
       }));
-      // setInitialState({ ...initialState, unreviewedCount: counts['0'] });
+      setInitialState({ ...initialState, unreviewedCount: counts['0'] });
       setTabData(updatedTabData);
   };
 
