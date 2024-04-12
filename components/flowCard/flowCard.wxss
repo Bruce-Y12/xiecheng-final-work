@@ -61,6 +61,7 @@ page{
   align-items: center;
 }
 .num{
-  font-size: 25rpx;
+  font-size: 21rpx;
   margin-left: 5rpx;
+  color: rgb(173, 170, 170);
 }

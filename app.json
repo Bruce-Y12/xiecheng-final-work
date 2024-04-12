@@ -9,11 +9,14 @@
     "pages/send/send",
     "pages/mine/mine",
     "pages/my/my",
-    "pages/article-edit/article-edit"
+    "pages/article-edit/article-edit",
+    "pages/message/message",
+    "pages/shopping/shopping"
   ],
   "window": {
+    
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "游迹",
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundTextStyle": "dark",
     "enablePullDownRefresh": true,
@@ -24,27 +27,40 @@
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "tabBar": {
-    "custom": true,
-    "selectedColor": "#3E2AD1",
+    "color": "#DCDCDC",
+    "selectedColor": "#000000",
+ 
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "image/home-0.png",
-        "selectedIconPath": "image/home-1.png",
+        "iconPath": "image/tabbar/index.png",
+        "selectedIconPath": "image/tabbar/index_cur.png",
         "text": "首页"
       },
       {
-        "pagePath": "pages/publish/publish",
-        "iconPath": "image/发布.png",
-        "selectedIconPath": "image/home-1.png",
+        "pagePath": "pages/shopping/shopping",
+        "iconPath": "image/tabbar/shop.png",
+        "selectedIconPath": "image/tabbar/shop_cur.png",
+        "text": "购物"
+      },
+      {
+        "pagePath": "pages/send/send",
+        "iconPath": "image/tabbar/publish.png",
+        "selectedIconPath": "image/tabbar/publish.png",
         "text": ""
       },
       {
+        "pagePath": "pages/message/message",
+        "iconPath": "image/tabbar/tip.png",
+        "selectedIconPath": "image/tabbar/tip_cur.png",
+        "text": "智能对话"
+      },
+      {
         "pagePath": "pages/my/my",
-        "iconPath": "image/me-0.png",
-        "selectedIconPath": "image/me-1.png",
-        "text": "我的"
+        "iconPath": "image/tabbar/me.png",
+        "selectedIconPath": "image/tabbar/me_cur.png",
+        "text": "我"
       }
-    ]   
+    ]
   }
 }

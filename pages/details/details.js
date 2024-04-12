@@ -29,7 +29,7 @@ Page({
         comment_id: 1, //评论id
         comment_pr_id: 1,//评论文章所属id
         comment_user_avatar: 'https://img2.imgtp.com/2024/04/06/rrRGgTUZ.jpg', //评论用户头像(路径替换为你的图片路径)
-        comment_user_name: 'Auditor', //评论人昵称
+        comment_user_name: '审核员', //评论人昵称
         comment_text: '去办理优待证是挺难的，但是办理了优待证之后福利特别好', //评论内容
         comment_time: '2020年8月18日', //评论时间
         reply_id: 0, //回复谁的评论，默认为0

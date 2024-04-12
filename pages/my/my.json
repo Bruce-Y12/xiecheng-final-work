@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "flowList": "../../components/flowList/flowList"
-  }
+  },
+  "navigationBarTitleText": "我的"
 }

@@ -73,6 +73,7 @@ Page({
             // 登陆成功，把个人信息放入app
             app.data.token = res.data.token,
             app.data.user_id = res.data.user_id,
+            
             wx.setStorageSync('token', res.data.token);
             wx.showToast({
               title: res.data.message,

@@ -12,8 +12,7 @@
 							<text class="name">{{item.name}}</text>
 						</view>
 						<view class="love-num">
-							<text class="love">{{item.love}}</text>
-							<text class="num">{{item.num}}</text>
+							<text class="num">{{item.publish_time}}</text>
 						</view>
 					</view>
 			</view>

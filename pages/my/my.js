@@ -205,6 +205,7 @@ Page({
     var that = this;
     const user_id = app.data.user_id;
     const getUserInfoApi = `${app.globalData.BASE_URL}/users/${user_id}`
+    console.log("%%getUserInfo:", getUserInfoApi);
     wx.request({
       url: getUserInfoApi,
       method: 'GET',
